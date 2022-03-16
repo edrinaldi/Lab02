@@ -23,26 +23,49 @@ public class FXMLController {
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
 
-    @FXML // fx:id="doClearText"
-    private Button doClearText; // Value injected by FXMLLoader
-
     @FXML // fx:id="txtParola"
     private TextField txtParola; // Value injected by FXMLLoader
 
-    @FXML // fx:id="txtTraduzione"
-    private TextArea txtTraduzione; // Value injected by FXMLLoader
+    @FXML // fx:id="txtRisultato"
+    private TextArea txtRisultato; // Value injected by FXMLLoader
 
     @FXML
     void doTranslate(ActionEvent event) {
-
+    	String input = txtParola.getText().toLowerCase();
+    	if (this.model.verifica(input) == false) {
+    		this.txtRisultato.setText("Puoi inserire solo i caratteri [a-zA-Z].");
+    		return;
+    	}
+    	String[] array = input.split(" ");
+    	String risultato;
+    	if (array.length == 1) {
+    		// tradurre la parola inserita
+    		risultato = this.model.traduci(array[0]);
+        	this.txtParola.clear(); 
+    	}
+    	else if (array.length == 2) {
+    		// aggiungere la coppia di parole
+    		risultato = this.model.aggiungi(array[0], array[1]);
+        	this.txtParola.clear(); 
+    	}
+    	else {
+    		risultato = "Inserimento non valido. Hai due opzioni:\n" +
+    					"- Inserire una parola e tradurla\n" +
+    					"- Aggiungere una nuova traduzione al dizionario\n" +
+    					"  <parola aliena> <traduzione> (separate da uno spazio)";
+    	}
+    	this.txtRisultato.appendText(risultato + "\n");
+    }
+    
+    @FXML
+    void doClearText(ActionEvent event) {
+    	txtRisultato.clear();
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert doClearText != null : "fx:id=\"doClearText\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtParola != null : "fx:id=\"txtParola\" was not injected: check your FXML file 'Scene.fxml'.";
-        assert txtTraduzione != null : "fx:id=\"txtTraduzione\" was not injected: check your FXML file 'Scene.fxml'.";
-
+        assert txtRisultato != null : "fx:id=\"txtRisultato\" was not injected: check your FXML file 'Scene.fxml'.";
     }
     
     public void setModel(Model model) {

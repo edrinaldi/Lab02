@@ -43,12 +43,12 @@
                   </Button>
                </children>
             </HBox>
-            <TextArea fx:id="txtTraduzione" prefHeight="200.0" prefWidth="200.0" promptText="Welcome to Alien Dictionary v2022...">
+            <TextArea fx:id="txtRisultato" prefHeight="200.0" prefWidth="200.0" promptText="Welcome to Alien Dictionary v2022...">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </TextArea>
-            <Button fx:id="doClearText" mnemonicParsing="false" text="Clear Text">
+            <Button mnemonicParsing="false" onAction="#doClearText" text="Clear Text">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
