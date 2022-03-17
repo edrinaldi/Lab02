@@ -32,27 +32,25 @@ public class FXMLController {
     @FXML
     void doTranslate(ActionEvent event) {
     	String input = txtParola.getText().toLowerCase();
-    	if (this.model.verifica(input) == false) {
-    		this.txtRisultato.setText("Puoi inserire solo i caratteri [a-zA-Z].");
-    		return;
-    	}
     	String[] array = input.split(" ");
     	String risultato;
     	if (array.length == 1) {
-    		// tradurre la parola inserita
     		risultato = this.model.traduci(array[0]);
-        	this.txtParola.clear(); 
     	}
     	else if (array.length == 2) {
-    		// aggiungere la coppia di parole
     		risultato = this.model.aggiungi(array[0], array[1]);
-        	this.txtParola.clear(); 
     	}
     	else {
     		risultato = "Inserimento non valido. Hai due opzioni:\n" +
-    					"- Inserire una parola e tradurla\n" +
+    					"- Inserire una parola e tradurla (wildcard abilitato)\n" +
     					"- Aggiungere una nuova traduzione al dizionario\n" +
     					"  <parola aliena> <traduzione> (separate da uno spazio)";
+    	}
+    	if (risultato == null) {
+    		risultato = "Puoi inserire solo i caratteri [a-zA-Z] e al piu' un '?'.";
+    	}
+    	else {
+        	this.txtParola.clear();
     	}
     	this.txtRisultato.appendText(risultato + "\n");
     }
